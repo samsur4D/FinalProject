@@ -1,0 +1,14 @@
+.extra-section{
+    background-image: url('https://i.ibb.co/p3fGw7H/chad-montano-GFCYho-Re48-unsplash.webp');
+    background-position: center;
+    height: 5000px;
+    margin-bottom: 100px;
+    background-size: cover;
+    border-radius: 30px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    object-fit: cover;
+}
