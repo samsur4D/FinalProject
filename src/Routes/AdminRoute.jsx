@@ -1,10 +1,12 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
 import useAuth from "../Hooks/useAuth";
+import { RiseLoader } from "react-spinners";
 
 
-const AdminRoute = (children) => {
-    const [user,loading] = useAuth();
+
+const AdminRoute = ({children}) => {
+    const {user,loading} = useAuth();
     const [isAdmin,isAdminLOading] = useAdmin()
     const location = useLocation();
 
