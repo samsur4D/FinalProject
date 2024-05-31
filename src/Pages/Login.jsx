@@ -1,16 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import logo from '../assets/home/login.jpg'
 import logo1 from '../assets/home/bistro-boss-resturant-high-resolution-logo-black-transparent.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../Providers/AuthProvider';
+import { Helmet } from 'react-helmet-async';
+import SocialLogin from './Common/SocialLogin';
 
 const Login = () => {
+  
+const navigate = useNavigate()
+const location = useLocation()
 
-    const captchaRef = useRef(null);
+const from = location.state?.from?.pathname || '/' ;
+console.log("paisi reee" , location.state);
+ 
     const [disable , setDisable] = useState(true)
 
+
+    const {signIn , user} = useContext(AuthContext)
+
+   
+    // useEffect(()=>{
+    //   if(user){
+    //     navigate('/')
+    //   }
+    // },[navigate , user])
+    
+    // const from = location.state || '/'
 
     useEffect(()=>{
         loadCaptchaEnginge(5); 
@@ -23,14 +42,24 @@ const handelLogin = e =>{
     const password = form.password.value;
 
     console.log(email , password);
+    signIn(email,password)
+    .then(result => {
+      const user = result.user;
+     
+      console.log(user);
+
+      Swal.fire("Login Complete");
+      navigate(from, {replace: true});
+      
+    })
 }
 
-const handelVAlidate = () =>{
-      const userCaptchavalue = captchaRef.current.value;
+const handelVAlidate = (e) =>{
+      const userCaptchavalue = e.target.value;
       console.log(userCaptchavalue);
       if(validateCaptcha(userCaptchavalue)){
            setDisable(false)
-           Swal.fire("Validation Complete");
+           Swal.fire("Validation Complet");
         //    toast.success('Validation Complete')
         //    alert('Validation Complete')
 
@@ -45,6 +74,11 @@ const handelVAlidate = () =>{
 
 
     return (
+
+ <>
+         <Helmet>
+      <title>Login</title>
+     </Helmet>
         <div data-aos="zoom-out-up" className='flex justify-center items-center min-h-[calc(100vh-306px)]  my-10'>
         <div className='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
           <div
@@ -58,7 +92,7 @@ const handelVAlidate = () =>{
             <div className='flex justify-center mx-auto'>
               <img
                 className='w-auto  h-20 '
-                src={logo}
+                src={logo1}
                 alt=''
               />
             </div>
@@ -67,7 +101,7 @@ const handelVAlidate = () =>{
               Welcome back!
             </p>
  
-            <div  className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
+            {/* <div  className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 '>
               <div className='px-4 py-2'>
                 <svg className='w-6 h-6' viewBox='0 0 40 40'>
                   <path
@@ -92,7 +126,8 @@ const handelVAlidate = () =>{
               <span className='w-5/6 px-4 py-3 font-bold text-center'>
                 Sign in with Google
               </span>
-            </div>
+            </div> */}
+            <SocialLogin></SocialLogin>
  
             <div className='flex items-center justify-between mt-4'>
               <span className='w-1/5 border-b  lg:w-1/4'></span>
@@ -149,15 +184,16 @@ const handelVAlidate = () =>{
                 </div>
  
                 <input
+                  onBlur={handelVAlidate}
                   id=''
                   autoComplete=''
-                  ref={captchaRef}
+                 
                   name='captcha'
                   placeholder='Type Captcha which You See Above'
                   className='block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300'
                   type='text'
                 />
-                <button onClick={handelVAlidate} className="btn btn-outline btn-xs mt-2">Validate</button>
+                {/* <button  className="btn btn-outline btn-xs mt-2">Validate</button> */}
               </div>
               <div className='mt-6'>
                 <button
@@ -185,6 +221,7 @@ const handelVAlidate = () =>{
           </div>
         </div>
       </div>
+ </>
 
     );
 };

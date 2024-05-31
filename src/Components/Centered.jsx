@@ -15,6 +15,7 @@ import img5 from "../assets/home/slide5.jpg";
 // import required modules
 import { Pagination } from "swiper/modules";
 import SectionTitle from "./SectionTitle";
+import Marquee from "react-fast-marquee";
 
 export default function App() {
   return (
@@ -22,7 +23,8 @@ export default function App() {
     data-aos-easing="ease-out-cubic"
     data-aos-duration="2000" className="mb-36 mt-24">
         <SectionTitle subHeading={"---from 11:00 am to 10:00 pm"} heading={'Order Online'}></SectionTitle>
-      <Swiper
+  
+   <Swiper
         slidesPerView={4}
         spaceBetween={30}
         centeredSlides={true}
@@ -53,6 +55,7 @@ export default function App() {
           <h3 className="text-5xl text-gray-200 text-center font-samu bg-opacity-60 -mt-20 mr-5">VEGETABLE</h3>
         </SwiperSlide>
       </Swiper>
+   
     </section>
   );
 }

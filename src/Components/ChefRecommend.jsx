@@ -3,8 +3,7 @@ import SectionTitle from './SectionTitle';
 
 const ChefRecommend = () => {
     return (
-        <section className='mb-24' data-aos="fade-up"
-        data-aos-anchor-placement="center-center">
+        <section className='mb-24'>
              <SectionTitle subHeading="--You Should Try--" heading="Chef Recommends"></SectionTitle>
      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
      <div className="max-w-96 rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800 hover:scale-[1.10] transition-all">

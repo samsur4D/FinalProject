@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import logo from '../../assets/home/bistro-boss-resturant-high-resolution-logo-white (1).png'
+import logo from "../../assets/home/bistro-boss-resturant-high-resolution-logo-white (1).png";
+import { AuthContext } from "../../Providers/AuthProvider";
+import { BsCartPlusFill } from "react-icons/bs";
+import useCart from "../../Hooks/useCart";
 
 const Navber = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCart();
+
+  const handelLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
+
+
+
   const navItems = (
     <>
       <Link
@@ -11,6 +25,13 @@ const Navber = () => {
         class="px-5 py-2.5 mr-3 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
       >
         Home
+      </Link>
+      <Link
+        to="/contact"
+        href="#_"
+        class="px-5 py-2.5 mr-3 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+      >
+        Contact Us
       </Link>
       <Link
         to="/menu"
@@ -27,18 +48,14 @@ const Navber = () => {
         Order Food
       </Link>
       <Link
-        to="/login"
+        to="/dashboard/cart"
         href="#_"
-        class="px-5 py-2.5 mr-3 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+        class=""
       >
-        Login
-      </Link>
-      <Link
-        to="/register"
-        href="#_"
-        class="px-5 py-2.5  font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
-      >
-        Register
+        <button className="btn">
+        <BsCartPlusFill className="text-2xl"/>
+          <div className="badge badge-secondary">+{cart.length}</div>
+        </button>
       </Link>
     </>
   );
@@ -74,8 +91,8 @@ const Navber = () => {
         <a className="btn btn-ghost text-xl">
           <img className="w-16 rounded-full " src={logo} alt="" />
           <div>
-          <h2 className="font-samu underline">Bistro Boss</h2>
-          <h4 className="font-samu">Resturant</h4>
+            <h2 className="font-samu underline">Bistro Boss</h2>
+            <h4 className="font-samu">Resturant</h4>
           </div>
         </a>
       </div>
@@ -86,7 +103,38 @@ const Navber = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <>
+            <span>
+              <img
+                src={user.photoURL}
+                className="w-12 h-12 rounded-full"
+                alt=""
+              />
+            </span>
+            <button onClick={handelLogOut} className="btn btn-info ml-3">
+              Logout
+            </button>{" "}
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              href="#_"
+              class="px-5 py-2.5 mr-3 ml-3 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+            >
+              Login
+            </Link>
+
+            <Link
+              to="/register"
+              href="#_"
+              class="px-5 py-2.5  font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
