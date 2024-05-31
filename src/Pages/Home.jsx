@@ -27,7 +27,7 @@ const Home = () => {
 
           <HomeHw></HomeHw>
 
-          <Marquee direction='right' speed={160}><p className='text-5xl font-samu font-bold bg-red-50 p-4 )'>--"Your Safety, Our Priority: Every Meal, Every Time.""--</p></Marquee>
+          <Marquee direction='right' speed={160}><p className='text-5xl font-samu font-bold bg-red-50 p-4 )'>--"Your Safety, Our Priority: Every Meal, Every Time🤎""--</p></Marquee>
 
           <Popular></Popular>
 
